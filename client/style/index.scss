@@ -1,0 +1,12 @@
+
+@import "bootstrap.min.css";
+@import "./nav.scss";
+@import "./pic.scss";
+
+body {
+  background-color: #ccc;
+}
+
+a:focus {
+    outline: none;
+}

@@ -1,0 +1,48 @@
+@import "./flexbox.scss";
+
+.grid {
+  margin: 0 auto;
+}
+
+.grid-item {
+    background-color: #f8f8f8;
+    padding: 5px;
+    width: 190px;
+    text-align: center;
+    margin: 5px;
+    box-shadow: 2px 2px 5px rgba(#666, 0.5);
+    position: relative;
+    top: 0;
+    transition: all 0.2s;
+    &:hover {
+      top: -1px;
+      box-shadow: 5px 5px 5px rgba(#666, 0.5);
+
+    }
+    .main-img {
+      img {
+        width: 180px;
+      }
+      p {
+        background-color:  #e8e8e8;
+        margin-top: 5px;
+        padding: 5px;
+        font-size: 0.9em;
+        color: #444;
+      }
+    }
+    .info {
+      background-color: #e8e8e8;
+      margin-top: 5px;
+      padding: 5px;
+      @include flexbox;
+      @include align-items(center);
+      @include justify-content(space-between);
+      img {
+        width: 35px;
+      }
+      .liked {
+        color: #4183D7;
+      }
+    }
+}

@@ -1,0 +1,23 @@
+
+@import "bootstrap.min.css";
+
+nav.navbar {
+  form.add-form {
+    padding: 5px;
+    input {
+      margin-bottom: 5px;
+    }
+    button {
+      margin-top: 10px;
+    }
+  }
+  img.tw-icon {
+    width: 18px;
+  }
+  img.brand-img {
+    position: relative;
+    top: -10px;
+    width: 40px;
+    box-shadow: 0 1px 3px rgba(#444, 0.5)
+  }
+}

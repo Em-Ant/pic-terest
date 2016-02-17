@@ -1,0 +1,11 @@
+node_modules/
+.eslintrc
+.env
+
+
+# local database
+mongod
+data/
+
+# backups
+*~
