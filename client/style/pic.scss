@@ -11,12 +11,8 @@
     text-align: center;
     margin: 5px;
     box-shadow: 2px 2px 5px rgba(#666, 0.5);
-    position: relative;
-    top: 0;
-    transition: all 0.2s;
     &:hover {
-      top: -1px;
-      box-shadow: 5px 5px 5px rgba(#666, 0.5);
+      box-shadow: 5px 5px 7px rgba(#666, 0.5);
 
     }
     .main-img {

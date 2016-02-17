@@ -31,16 +31,12 @@ var App = React.createClass({
       self.getAllPics();
     });
   },
-  setProfile: function () {
-    this.setState({
-      page: 'all'
-    })
-  },
   getAllPics: function() {
+    var self = this;
     this.setState({pics:[], loading:true});
     Ajax.ajaxRequest('get', appUrl + '/api/pics', function(data) {
-      this.setState({pics: data, page: 'all', loading: false});
-    }.bind(this));
+      self.setState({pics: data, page: 'all', loading: false});
+    });
   },
   getUserPicsbyId: function(id, cb) {
     Ajax.ajaxRequest('get', appUrl + '/api/pics/' + id, function(data) {
