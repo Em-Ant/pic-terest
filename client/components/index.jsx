@@ -37,8 +37,9 @@ var App = React.createClass({
     })
   },
   getAllPics: function() {
+    this.setState({pics:[], loading:true});
     Ajax.ajaxRequest('get', appUrl + '/api/pics', function(data) {
-      this.setState({pics: data, page: 'all'});
+      this.setState({pics: data, page: 'all', loading: false});
     }.bind(this));
   },
   getUserPicsbyId: function(id, cb) {
@@ -47,9 +48,10 @@ var App = React.createClass({
     }.bind(this));
   },
   getUserPics: function(index) {
+    this.setState({pics:[], loading:true});
     var id = this.state.pics[index].ownerId._id;
     this.getUserPicsbyId(id, function(pics) {
-      this.setState({pics: pics, page: 'user'});
+      this.setState({pics: pics, page: 'user', loading: false});
     }.bind(this));
   },
   createPic: function (url, desc) {
@@ -111,6 +113,7 @@ var App = React.createClass({
     }
   },
   render: function () {
+    var hide = this.state.loading ? '' : ' c-hide';
     var self = this;
     var pics = this.state.pics.map(function(p, i) {
       return (
@@ -138,6 +141,9 @@ var App = React.createClass({
           page={this.state.page}
           setPage={this.setPage}/>
         <div className="container">
+          <div className={'preloader' + hide}>
+            <img src="/img/preloader.gif"/>
+          </div>
           <Masonry
             className={'grid'}
             options={
