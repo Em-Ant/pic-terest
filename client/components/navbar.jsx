@@ -6,7 +6,7 @@ module.exports = React.createClass({
     if(this.refs.url.value) {
       this.props.submit(this.refs.url.value, this.refs.desc.value);
       this.refs.url.value = '';
-      this.refs.desc.desc = '';
+      this.refs.desc.value = '';
     }
   },
   render: function () {
@@ -55,7 +55,7 @@ module.exports = React.createClass({
                   <form className="add-form" onSubmit={this.submit}>
                     <input type="text" ref="url" placeholder="Pic url..." className="form-control"/>
                     <input type="text" ref="desc" placeholder="Pic description..." className="form-control"/>
-                    <button type="submit" className="btn btn-default btn-block">Send</button>
+                    <button type="submit" className="btn btn-primary btn-block">Send</button>
                   </form>
                 </div>
               </li>
