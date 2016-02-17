@@ -21,3 +21,7 @@ There is a bonus picture liking feature.
 * React, no Flux
 * Bootstrap,
 * Masonry
+
+###TODO
+
+Manage loading states for single images, and like.
