@@ -12,6 +12,7 @@ module.exports = React.createClass({
   render: function () {
     var hideIfLoggedOut = this.props.loggedIn ? '' : ' hide';
     var hideIfLoggedIn = this.props.loggedIn ? ' hide' : '';
+    var dOL = this.props.setPageDisabled;
     var all = myPics = '';
     switch (this.props.page) {
       case 'all' :
@@ -41,8 +42,8 @@ module.exports = React.createClass({
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li className={all}><a href="#" onClick={this.props.setPage.bind(null,'all')}>All <span className="sr-only">(current)</span></a></li>
-              <li className={myPics + hideIfLoggedOut}><a href="#" onClick={this.props.setPage.bind(null,'myPics')}>My Pics</a></li>
+              <li className={all}><a href="#" onClick={dOL ? null : this.props.setPage.bind(null,'all')}>All <span className="sr-only">(current)</span></a></li>
+              <li className={myPics + hideIfLoggedOut}><a href="#" onClick={dOL ? null : this.props.setPage.bind(null,'myPics')}>My Pics</a></li>
               <li className={'dropdown' + hideIfLoggedOut}>
                 <a href="#"
                   className="dropdown-toggle"
@@ -52,7 +53,7 @@ module.exports = React.createClass({
                   aria-expanded="false">Add a Pic <span className="caret"></span>
                 </a>
                 <div className="dropdown-menu">
-                  <form className="add-form" onSubmit={this.submit}>
+                  <form className="add-form" onSubmit={dOL ? null : this.submit}>
                     <input type="text" ref="url" placeholder="Pic url..." className="form-control"/>
                     <input type="text" ref="desc" placeholder="Pic description..." className="form-control"/>
                     <button type="submit" className="btn btn-primary btn-block">Send</button>

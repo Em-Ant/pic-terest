@@ -7,6 +7,7 @@ module.exports = React.createClass({
     var hideOnLoading = this.props.loading ? ' c-hide' : '';
     var showOnLoading = this.props.loading ? '' : ' c-hide';
     var disabledOnLoading = this.props.loading ? ' disabled' : '';
+    var dOLfn = this.props.userPicsDisabled;
     if(!this.props.likeable) likeClass+= ' disabled';
     var deleteBtn = this.props.deletable
       ? <div className="btn btn-default btn-sm"
@@ -21,7 +22,7 @@ module.exports = React.createClass({
           <p>{this.props.description}</p>
         </div>
         <div className="info">
-          <a href="#" onClick={this.props.getUserPics}>
+          <a href="#" onClick={dOLfn ? null : this.props.getUserPics}>
             <img src={this.props.ownerImg} title={this.props.username}></img>
           </a>
           {deleteBtn}

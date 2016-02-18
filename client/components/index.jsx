@@ -130,7 +130,8 @@ var App = React.createClass({
           like={self.likeHandler.bind(null,i)}
           delete={self.deletePic.bind(null,i)}
           imgReplacer={self.imgReplacer}
-          loading={self.state.picLoading === i}/>
+          loading={self.state.picLoading === i}
+          userPicsDisabled={self.state.picLoading !== undefined}/>
         )
       });
     return (
@@ -139,7 +140,8 @@ var App = React.createClass({
           submit={this.createPic}
           loggedIn={this.state.loggedIn}
           page={this.state.page}
-          setPage={this.setPage}/>
+          setPage={this.setPage}
+          setPageDisabled={self.state.picLoading !== undefined}/>
         <div className="container">
           <div className={'preloader' + hide}>
             <img src="/img/preloader.gif"/>
