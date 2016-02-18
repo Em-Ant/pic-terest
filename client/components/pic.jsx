@@ -6,6 +6,7 @@ module.exports = React.createClass({
     var likeClass = this.props.liked ? "liked btn btn-default btn-sm" : 'like btn btn-default btn-sm';
     var hideOnLoading = this.props.loading ? ' c-hide' : '';
     var showOnLoading = this.props.loading ? '' : ' c-hide';
+    var disabledOnLoading = this.props.loading ? ' disabled' : '';
     if(!this.props.likeable) likeClass+= ' disabled';
     var deleteBtn = this.props.deletable
       ? <div className="btn btn-default btn-sm"
@@ -25,7 +26,7 @@ module.exports = React.createClass({
           </a>
           {deleteBtn}
           <div
-            className={likeClass}
+            className={likeClass + disabledOnLoading}
             onClick={this.props.likeable ? this.props.like : null}>
             <span className={"glyphicon glyphicon-star" + hideOnLoading} aria-hidden="true"></span>
             <span className={"glyphicon glyphicon-hourglass" + showOnLoading} aria-hidden="true"></span>

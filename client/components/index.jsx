@@ -75,7 +75,9 @@ var App = React.createClass({
         d.likers.push(self.state.user._id);
         pics[index].likers = d.likers;
       }
-      self.setState({pics: pics, picLoading: undefined});
+      if(!self.state.loading) {
+        self.setState({pics: pics, picLoading: undefined});
+      }
     })
   },
   deletePic: function(index) {
