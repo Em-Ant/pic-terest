@@ -64,6 +64,7 @@ var App = React.createClass({
     var id = this.state.pics[index]._id;
     var liked = (this.state.pics[index].likers.indexOf(this.state.user._id) !== -1)
     var verb = liked ? 'put' : 'post';
+    this.setState({picLoading: index});
     Ajax.ajaxRequest(verb, appUrl + '/api/pics/' + id, function(d){
       var pics = self.state.pics;
       if(liked) {
@@ -74,7 +75,7 @@ var App = React.createClass({
         d.likers.push(self.state.user._id);
         pics[index].likers = d.likers;
       }
-      self.setState({pics: pics});
+      self.setState({pics: pics, picLoading: undefined});
     })
   },
   deletePic: function(index) {
@@ -126,7 +127,8 @@ var App = React.createClass({
           likes={p.likers.length}
           like={self.likeHandler.bind(null,i)}
           delete={self.deletePic.bind(null,i)}
-          imgReplacer={self.imgReplacer}/>
+          imgReplacer={self.imgReplacer}
+          loading={self.state.picLoading === i}/>
         )
       });
     return (

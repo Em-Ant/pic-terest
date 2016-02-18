@@ -3,7 +3,9 @@ var appUrl = window.location.origin;
 
 module.exports = React.createClass({
   render: function() {
-    var likeClass = this.props.liked ? "liked btn btn-default btn-sm" : 'btn btn-default btn-sm';
+    var likeClass = this.props.liked ? "liked btn btn-default btn-sm" : 'like btn btn-default btn-sm';
+    var hideOnLoading = this.props.loading ? ' c-hide' : '';
+    var showOnLoading = this.props.loading ? '' : ' c-hide';
     if(!this.props.likeable) likeClass+= ' disabled';
     var deleteBtn = this.props.deletable
       ? <div className="btn btn-default btn-sm"
@@ -25,7 +27,9 @@ module.exports = React.createClass({
           <div
             className={likeClass}
             onClick={this.props.likeable ? this.props.like : null}>
-            <span className="glyphicon glyphicon-heart-empty" aria-hidden="true"></span> {this.props.likes ? this.props.likes : "0"}
+            <span className={"glyphicon glyphicon-star" + hideOnLoading} aria-hidden="true"></span>
+            <span className={"glyphicon glyphicon-hourglass" + showOnLoading} aria-hidden="true"></span>
+            &nbsp;{this.props.likes ? this.props.likes : "0"}
           </div>
         </div>
       </div>
