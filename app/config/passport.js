@@ -4,6 +4,20 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 var User = require('../models/users');
 var configAuth = require('./auth');
 
+function updateTwitterPictureAndDone(profile, user, done) {
+  if (profile.photos[0].value === user.twitter.imageUrl)
+    return done(null, user);
+  else {
+    user.twitter.imageUrl = profile.photos[0].value;
+    user.save(function(err) {
+      if (err) {
+        throw err;
+      }
+      return done(null, user);
+    })
+  }
+};
+
 module.exports = function (passport) {
 	passport.serializeUser(function (user, done) {
 		done(null, user.id);
@@ -28,7 +42,7 @@ module.exports = function (passport) {
 				}
 
 				if (user) {
-					return done(null, user);
+					return updateTwitterPictureAndDone(profile, user, done);
 				} else {
 					var newUser = new User();
 
