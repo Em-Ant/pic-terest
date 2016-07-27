@@ -23,7 +23,11 @@ module.exports = React.createClass({
         </div>
         <div className="info">
           <a href="#" onClick={dOLfn ? null : this.props.getUserPics}>
-            <img src={this.props.ownerImg} title={this.props.username}></img>
+            <img
+              src={this.props.ownerImg}
+              title={this.props.username}
+              onError={this.props.idReplacer}>
+            </img>
           </a>
           {deleteBtn}
           <div

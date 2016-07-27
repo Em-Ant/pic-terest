@@ -9,3 +9,9 @@ data/
 
 # backups
 *~
+
+# sourcemaps
+*.map
+
+# logs
+*.log

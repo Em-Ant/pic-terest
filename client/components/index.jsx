@@ -95,6 +95,9 @@ var App = React.createClass({
   imgReplacer: function(e) {
     e.target.src = appUrl + '/img/placeholder.png';
   },
+  idReplacer: function(e) {
+  e.target.src = appUrl + "/img/twitter-egg-icon.png";
+  },
   setPage: function  (page) {
     var self = this;
     switch (page) {
@@ -130,6 +133,7 @@ var App = React.createClass({
           like={self.likeHandler.bind(null,i)}
           delete={self.deletePic.bind(null,i)}
           imgReplacer={self.imgReplacer}
+          idReplacer={self.idReplacer}
           loading={self.state.picLoading === i}
           userPicsDisabled={self.state.picLoading !== undefined}/>
         )
