@@ -24,7 +24,8 @@
     "node": "^6.12.3"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   },
   "author": "Emanuele Antonelli",
   "license": "MIT",
@@ -40,9 +41,7 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-masonry-component": "^4.0.0",
-    "serve-favicon": "^2.3.0"
-  },
-  "devDependencies": {
+    "serve-favicon": "^2.3.0",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.2",
     "babel-preset-react": "^6.3.13",
