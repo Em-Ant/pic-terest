@@ -128,7 +128,11 @@ var App = React.createClass({
           username={'@'+p.ownerId.twitter.username}
           getUserPics={self.getUserPics.bind(null,i)}
           liked={p.likers.indexOf(self.state.user._id) !== -1}
-          deletable={self.state.loggedIn && self.state.page === 'myPics' && p.ownerId._id === self.state.user._id}
+          deletable={self.state.loggedIn && (
+            self.state.user.isAdmin || (
+            self.state.page === 'myPics' &&
+            p.ownerId._id === self.state.user._id)
+          )}
           likes={p.likers.length}
           like={self.likeHandler.bind(null,i)}
           delete={self.deletePic.bind(null,i)}

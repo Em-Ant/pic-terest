@@ -26,6 +26,7 @@ function AppHandler () {
     Pic.find()
       .populate('ownerId')
       .sort({date: -1})
+      .limit(30)
       .exec(function(err, pics){
         if(err) {
           if(err) return handleError(err);
@@ -61,6 +62,10 @@ function AppHandler () {
   };
 
   this.deletePic = function (req, res) {
+    var query = { _id: req.params.id };
+    if (!req.user.isAdmin) {
+      query.ownerId = req.user._id;
+    }
     Pic.findOneAndRemove({_id: req.params.id}, function(err, pic) {
       if(err) return handleError(err);
       res.json(pic);

@@ -25,6 +25,11 @@ module.exports = function (passport) {
 
 	passport.deserializeUser(function (id, done) {
 		User.findById(id, function (err, user) {
+			if (process.env.ENABLE_ADMIN && 
+				user.twitter.id === process.env.ADMIN_ID) {
+					user = user.toObject();
+					user.isAdmin = true;
+				}
 			done(err, user);
 		});
 	});

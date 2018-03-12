@@ -5,7 +5,10 @@ var Schema = mongoose.Schema;
 
 var Pic = new Schema({
   url: {type: String, required: true},
-  description: String,
+  description: {
+    type: String,
+    maxlength: 120
+  },
   date: {type: Date, default: Date.now },
   ownerId: {type: Schema.Types.ObjectId, required: true, ref: 'User'},
   likers: [Schema.Types.ObjectId]

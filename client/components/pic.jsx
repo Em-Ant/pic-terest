@@ -2,6 +2,14 @@ var React = require('react');
 var appUrl = window.location.origin;
 
 module.exports = React.createClass({
+  getDeleteBtn: function () {
+    return this.props.deletable
+      ? <div className="btn btn-default btn-sm"
+        onClick={this.props.delete}>
+        <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      </div>
+      : null;
+  },
   render: function() {
     var likeClass = this.props.liked ? "liked btn btn-default btn-sm" : 'like btn btn-default btn-sm';
     var hideOnLoading = this.props.loading ? ' c-hide' : '';
@@ -9,12 +17,6 @@ module.exports = React.createClass({
     var disabledOnLoading = this.props.loading ? ' disabled' : '';
     var dOLfn = this.props.userPicsDisabled;
     if(!this.props.likeable) likeClass+= ' disabled';
-    var deleteBtn = this.props.deletable
-      ? <div className="btn btn-default btn-sm"
-        onClick={this.props.delete}>
-          <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-        </div>
-      : null;
     return (
       <div className="grid-item">
         <div className="main-img">
@@ -29,7 +31,7 @@ module.exports = React.createClass({
               onError={this.props.idReplacer}>
             </img>
           </a>
-          {deleteBtn}
+          {this.getDeleteBtn()}
           <div
             className={likeClass + disabledOnLoading}
             onClick={this.props.likeable ? this.props.like : null}>

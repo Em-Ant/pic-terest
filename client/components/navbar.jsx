@@ -4,7 +4,11 @@ module.exports = React.createClass({
   submit: function(e) {
     e.preventDefault();
     if(this.refs.url.value) {
-      this.props.submit(this.refs.url.value, this.refs.desc.value);
+      var desc = this.refs.desc.value;
+      if (desc.length > 120){
+        desc = desc.substring(0, 117) + '...';
+      } 
+      this.props.submit(this.refs.url.value, desc);
       this.refs.url.value = '';
       this.refs.desc.value = '';
     }
@@ -55,7 +59,7 @@ module.exports = React.createClass({
                 <div className="dropdown-menu">
                   <form className="add-form" onSubmit={dOL ? null : this.submit}>
                     <input type="text" ref="url" placeholder="Pic url..." className="form-control"/>
-                    <input type="text" ref="desc" placeholder="Pic description..." className="form-control"/>
+                    <textarea ref="desc" placeholder="Pic description..." className="form-control"/>
                     <button type="submit" className="btn btn-primary btn-block">Send</button>
                   </form>
                 </div>

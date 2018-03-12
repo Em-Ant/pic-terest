@@ -15,3 +15,8 @@ data/
 
 # logs
 *.log
+
+#bundle
+client/public/static/bundle.js
+
+package-lock.json
