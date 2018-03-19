@@ -17,10 +17,15 @@ module.exports = React.createClass({
     var disabledOnLoading = this.props.loading ? ' disabled' : '';
     var dOLfn = this.props.userPicsDisabled;
     if(!this.props.likeable) likeClass+= ' disabled';
+    var picHeight = this.props.height + 'px';
     return (
       <div className="grid-item">
         <div className="main-img">
-          <img src={this.props.imgUrl} onError={this.props.imgReplacer}></img>
+          <img
+            style={{height: picHeight}}
+            src={this.props.imgUrl}
+            onError={this.props.imgReplacer}
+          ></img>
           <p>{this.props.description}</p>
         </div>
         <div className="info">

@@ -16,8 +16,16 @@
 
     }
     .main-img {
+      div.preloader {
+        width: 180px;
+        background-color: #e8e8e8
+      }
+      img.hidden {
+        display: none
+      }
       img {
         width: 180px;
+        background-color: #e8e8e8;
       }
       p {
         background-color:  #e8e8e8;

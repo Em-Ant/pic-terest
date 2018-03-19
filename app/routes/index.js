@@ -17,6 +17,8 @@ module.exports = function (app, passport) {
 	var appHandler = new AppHandler();
 
 
+	app.get('/img/:id', appHandler.getImg);
+
 	app.route('/api/user')
 		.get(function (req, res) {
       if(req.user) {

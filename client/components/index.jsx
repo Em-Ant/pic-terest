@@ -54,10 +54,11 @@ var App = React.createClass({
     if(!url) return
     desc = desc || 'a pic by @' + this.state.user.twitter.username;
     Ajax.ajaxRequest('post', appUrl + '/api/pics',  function(d) {
-      var pics = this.state.pics;
+      console.log(d);
+      var pics = [...this.state.pics];
       pics.unshift(d);
       this.setState({pics: pics});
-    }.bind(this), null, {url: url, description: desc})
+    }.bind(this), null, {webUrl: url, description: desc})
   },
   likeHandler: function(index) {
     var self = this;
@@ -122,6 +123,7 @@ var App = React.createClass({
         <Pic
           key={i}
           imgUrl={p.url}
+          height={p.height || 180}
           description={p.description}
           ownerImg={p.ownerId.twitter.imageUrl}
           likeable={self.state.loggedIn }
