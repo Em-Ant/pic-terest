@@ -1,11 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var css = require('../style/index.scss');
 var Ajax = new (require('../js/ajax-functions.js'));
 
 var $ = jQuery = require('jquery');
+require('../style/index.scss');
 require('bootstrap');
-
 var Masonry = require('react-masonry-component');
 
 var Pic = require('./pic.jsx');
@@ -54,8 +53,7 @@ var App = React.createClass({
     if(!url) return
     desc = desc || 'a pic by @' + this.state.user.twitter.username;
     Ajax.ajaxRequest('post', appUrl + '/api/pics',  function(d) {
-      console.log(d);
-      var pics = [...this.state.pics];
+      var pics = this.state.pics.map(function(p){return p;});
       pics.unshift(d);
       this.setState({pics: pics});
     }.bind(this), null, {webUrl: url, description: desc})
@@ -84,7 +82,7 @@ var App = React.createClass({
   deletePic: function(index) {
     var self = this;
     var id = this.state.pics[index]._id;
-    Ajax.ajaxRequest('delete', appUrl + '/api/pics/' + id, function(d){
+    Ajax.ajaxRequest('delete', appUrl + '/api/pics/' + id, function(){
       var pics = self.state.pics;
       pics.splice(index,1);
       self.setState({pics: pics});

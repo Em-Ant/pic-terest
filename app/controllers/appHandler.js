@@ -4,7 +4,6 @@ var User = require('../models/users.js');
 var Pic = require('../models/pics.js');
 var sharp = require('sharp');
 var request = require('request');
-var path = require('path');
 
 function handleError(res, err) {
   return res.status(500).send(err);

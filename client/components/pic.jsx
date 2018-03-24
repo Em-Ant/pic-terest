@@ -1,5 +1,4 @@
 var React = require('react');
-var appUrl = window.location.origin;
 
 module.exports = React.createClass({
   getDeleteBtn: function () {
