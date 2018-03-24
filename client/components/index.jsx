@@ -122,7 +122,7 @@ var App = React.createClass({
       return (
         <Pic
           key={i}
-          imgUrl={p.url}
+          imgUrl={appUrl + p.url}
           height={p.height || 180}
           description={p.description}
           ownerImg={p.ownerId.twitter.imageUrl}

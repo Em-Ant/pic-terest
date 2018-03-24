@@ -13,7 +13,7 @@ var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 
 var app = express();
-if(process.env.NODE_ENV  !== 'production') require('dotenv').load();
+require('dotenv').config({ silent: true });
 
 require('./app/config/passport')(passport);
 

@@ -39,7 +39,7 @@ function AppHandler () {
           pic.format = info.format;
           pic.data = data;
           var newPic = new Pic(pic);
-          newPic.url = process.env.APP_URL + 'img/' + newPic._id + '.' + newPic.format;
+          newPic.url = '/img/' + newPic._id + '.' + newPic.format;
           newPic.save(function (err) {
             if (err) return handleError(res, err);
             Pic.populate(newPic, { path: "ownerId" }, function (err, pic) {
@@ -58,7 +58,7 @@ function AppHandler () {
       .select('-data')
       .populate('ownerId')
       .sort({date: -1})
-      .limit(30)
+      .limit(40)
       .exec(function(err, pics){
         if(err) {
           if(err) return handleError(res, err);
