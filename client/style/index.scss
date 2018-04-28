@@ -1,19 +1,19 @@
-
-@import "bootstrap.min.css";
-@import "./nav.scss";
-@import "./pic.scss";
+@import 'bootstrap.min.css';
+@import './nav.scss';
+@import './pic.scss';
 
 body {
   background-color: #ccc;
 }
 
 .c-hide {
-  display:none;
+  display: none;
 }
 
 .preloader {
   text-align: center;
+  margin-bottom: 30px;
 }
 a:focus {
-    outline: none;
+  outline: none;
 }
