@@ -18,7 +18,7 @@ function isAllScrollDown() {
     c = $(window).height();
 
   var scrollPercent = s / (d - c);
-  return scrollPercent === 1;
+  return d === c || scrollPercent === 1;
 }
 
 function setEndScrollListener(cb) {

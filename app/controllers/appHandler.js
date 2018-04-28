@@ -54,10 +54,10 @@ function AppHandler() {
     var offset = parseInt(req.query.offset) || 0;
     var limit = parseInt(req.query.limit) || 20;
     Pic.find()
-      .select('-data')
-      .sort({ date: -1 })
       .skip(offset)
       .limit(limit)
+      .sort({ date: -1 })
+      .select('-data')
       .populate('ownerId')
       .exec(function(err, pics) {
         if (err) {
