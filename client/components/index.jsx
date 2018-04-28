@@ -213,9 +213,7 @@ var App = React.createClass({
           >
             {pics}
           </Masonry>
-          <div className={'preloader' + hide}>
-            <img src="/img/preloader.gif" />
-          </div>
+          <div className={'loader' + hide} />
         </div>
       </div>
     );
