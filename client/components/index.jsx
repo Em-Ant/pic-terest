@@ -54,19 +54,19 @@ var App = React.createClass({
       self.getAllPics();
     });
   },
-  getAllPics: function() {
+  getAllPics: function(append) {
     var self = this;
-    var offset = this.state.pics.length;
+    var offset = append ? this.state.pics.length : 0;
     var limit = 20;
     var picsUrl =
       appUrl + '/api/pics?limit=' + limit + (offset ? '&offset=' + offset : '');
     this.setState({ loading: true });
     removeEndScrollListener();
     Ajax.ajaxRequest('get', picsUrl, function(data) {
-      var pics = self.state.pics.concat(data);
+      var pics = append ? self.state.pics.concat(data) : data;
       self.setState({ pics: pics, page: 'all', loading: false });
       if (data.length && data.length === limit)
-        setEndScrollListener(self.getAllPics);
+        setEndScrollListener(self.getAllPics.bind(self, true));
     });
   },
   getUserPicsbyId: function(id, cb) {
@@ -79,6 +79,7 @@ var App = React.createClass({
     );
   },
   getUserPics: function(index) {
+    removeEndScrollListener();
     this.setState({ pics: [], loading: true });
     var id = this.state.pics[index].ownerId._id;
     this.getUserPicsbyId(
