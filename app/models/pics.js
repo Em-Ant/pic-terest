@@ -1,22 +1,20 @@
-'use strict';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-var Pic = new Schema({
-  url: {type: String, required: true},
+const Pic = new Schema({
+  url: { type: String, required: true },
   webUrl: String,
   description: {
     type: String,
-    maxlength: 120
+    maxlength: 120,
   },
   width: Number,
   height: Number,
   format: String,
-  date: {type: Date, default: Date.now },
-  ownerId: {type: Schema.Types.ObjectId, required: true, ref: 'User'},
+  date: { type: Date, default: Date.now },
+  ownerId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   likers: [Schema.Types.ObjectId],
-  data: Buffer
+  data: Buffer,
 });
 
 module.exports = mongoose.model('Pic', Pic);
