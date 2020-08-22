@@ -1,27 +1,31 @@
-var React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-  getDeleteBtn: function () {
-    return this.props.deletable
-      ? <div className="btn btn-default btn-sm"
-        onClick={this.props.delete}>
+class Pic extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  getDeleteBtn() {
+    return this.props.deletable ? (
+      <div className="btn btn-default btn-sm" onClick={this.props.delete}>
         <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
       </div>
-      : null;
-  },
-  render: function() {
-    var likeClass = this.props.liked ? "liked btn btn-default btn-sm" : 'like btn btn-default btn-sm';
-    var hideOnLoading = this.props.loading ? ' c-hide' : '';
-    var showOnLoading = this.props.loading ? '' : ' c-hide';
-    var disabledOnLoading = this.props.loading ? ' disabled' : '';
-    var dOLfn = this.props.userPicsDisabled;
-    if(!this.props.likeable) likeClass+= ' disabled';
-    var picHeight = this.props.height + 'px';
+    ) : null;
+  }
+  render() {
+    let likeClass = this.props.liked
+      ? 'liked btn btn-default btn-sm'
+      : 'like btn btn-default btn-sm';
+    const hideOnLoading = this.props.loading ? ' c-hide' : '';
+    const showOnLoading = this.props.loading ? '' : ' c-hide';
+    const disabledOnLoading = this.props.loading ? ' disabled' : '';
+    const dOLfn = this.props.userPicsDisabled;
+    if (!this.props.likeable) likeClass += ' disabled';
+    const picHeight = this.props.height + 'px';
     return (
       <div className="grid-item">
         <div className="main-img">
           <img
-            style={{height: picHeight}}
+            style={{ height: picHeight }}
             src={this.props.imgUrl}
             onError={this.props.imgReplacer}
           ></img>
@@ -32,19 +36,28 @@ module.exports = React.createClass({
             <img
               src={this.props.ownerImg}
               title={this.props.username}
-              onError={this.props.idReplacer}>
-            </img>
+              onError={this.props.idReplacer}
+            ></img>
           </a>
           {this.getDeleteBtn()}
           <div
             className={likeClass + disabledOnLoading}
-            onClick={this.props.likeable ? this.props.like : null}>
-            <span className={"glyphicon glyphicon-star" + hideOnLoading} aria-hidden="true"></span>
-            <span className={"glyphicon glyphicon-hourglass" + showOnLoading} aria-hidden="true"></span>
-            &nbsp;{this.props.likes ? this.props.likes : "0"}
+            onClick={this.props.likeable ? this.props.like : null}
+          >
+            <span
+              className={'glyphicon glyphicon-star' + hideOnLoading}
+              aria-hidden="true"
+            ></span>
+            <span
+              className={'glyphicon glyphicon-hourglass' + showOnLoading}
+              aria-hidden="true"
+            ></span>
+            &nbsp;{this.props.likes ? this.props.likes : '0'}
           </div>
         </div>
       </div>
-    )
+    );
   }
-})
+}
+
+export default Pic;

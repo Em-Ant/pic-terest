@@ -1,30 +1,31 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Ajax = new (require('../js/ajax-functions.js'))();
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Ajax from '../js/ajax-functions.js';
 
-var $ = (jQuery = require('jquery'));
-require('../style/index.scss');
-require('bootstrap');
-var Masonry = require('react-masonry-component');
+import '../style/index.scss';
+import 'bootstrap';
+import Masonry from 'react-masonry-component';
 
-var Pic = require('./pic.jsx');
-var Nav = require('./navbar.jsx');
+import Pic from './pic.jsx';
+import Nav from './navbar.jsx';
 
-var appUrl = window.location.origin;
+const appUrl = window.location.origin;
+
+const ajax = new Ajax();
 
 function isAllScrollDown() {
-  var s = $(window).scrollTop(),
+  const s = $(window).scrollTop(),
     d = $(document).height(),
     c = $(window).height();
 
-  var scrollPercent = s / (d - c);
+  const scrollPercent = s / (d - c);
   return d === c || scrollPercent === 1;
 }
 
 function setEndScrollListener(cb) {
-  setTimeout(function() {
+  setTimeout(function () {
     if (isAllScrollDown()) return cb();
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
       if (isAllScrollDown()) cb();
     });
   }, 500);
@@ -34,69 +35,80 @@ function removeEndScrollListener() {
   $(window).off('scroll');
 }
 
-var App = React.createClass({
-  componentDidMount: function() {
-    var self = this;
-    Ajax.ajaxRequest('get', appUrl + '/api/user', function(user) {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: { twitter: {} }, page: 'all', pics: [] };
+    this.getAllPics = this.getAllPics.bind(this);
+    this.getUserPicsbyId = this.getUserPicsbyId.bind(this);
+    this.getUserPics = this.getUserPics.bind(this);
+    this.createPic = this.createPic.bind(this);
+    this.deletePic = this.deletePic.bind(this);
+    this.likeHandler = this.likeHandler.bind(this);
+    this.setPage = this.setPage.bind(this);
+  }
+  componentDidMount() {
+    const self = this;
+    ajax.ajaxRequest('get', appUrl + '/api/user', function (user) {
       if (user.status !== 'unauthenticated') {
         self.setState({
           user: user,
           loggedIn: true,
-          pics: []
+          pics: [],
         });
       } else {
         self.setState({
           user: { twitter: { username: 'guest' } },
           loggedIn: false,
-          pics: []
+          pics: [],
         });
       }
       self.getAllPics();
     });
-  },
-  getAllPics: function(append) {
-    var self = this;
-    var offset = append ? this.state.pics.length : 0;
-    var limit = 20;
-    var picsUrl =
+  }
+  getAllPics(append) {
+    const self = this;
+    const offset = append ? this.state.pics.length : 0;
+    const limit = 20;
+    const picsUrl =
       appUrl + '/api/pics?limit=' + limit + (offset ? '&offset=' + offset : '');
     this.setState({ loading: true });
     removeEndScrollListener();
-    Ajax.ajaxRequest('get', picsUrl, function(data) {
-      var pics = append ? self.state.pics.concat(data) : data;
+    ajax.ajaxRequest('get', picsUrl, function (data) {
+      const pics = append ? self.state.pics.concat(data) : data;
       self.setState({ pics: pics, page: 'all', loading: false });
       if (data.length && data.length === limit)
         setEndScrollListener(self.getAllPics.bind(self, true));
     });
-  },
-  getUserPicsbyId: function(id, cb) {
-    Ajax.ajaxRequest(
+  }
+  getUserPicsbyId(id, cb) {
+    ajax.ajaxRequest(
       'get',
       appUrl + '/api/pics/' + id,
-      function(data) {
+      function (data) {
         cb(data);
       }.bind(this)
     );
-  },
-  getUserPics: function(index) {
+  }
+  getUserPics(index) {
     removeEndScrollListener();
     this.setState({ pics: [], loading: true });
-    var id = this.state.pics[index].ownerId._id;
+    const id = this.state.pics[index].ownerId._id;
     this.getUserPicsbyId(
       id,
-      function(pics) {
+      function (pics) {
         this.setState({ pics: pics, page: 'user', loading: false });
       }.bind(this)
     );
-  },
-  createPic: function(url, desc) {
+  }
+  createPic(url, desc) {
     if (!url) return;
     desc = desc || 'a pic by @' + this.state.user.twitter.username;
-    Ajax.ajaxRequest(
+    ajax.ajaxRequest(
       'post',
       appUrl + '/api/pics',
-      function(d) {
-        var pics = this.state.pics.map(function(p) {
+      function (d) {
+        const pics = this.state.pics.map(function (p) {
           return p;
         });
         pics.unshift(d);
@@ -105,18 +117,18 @@ var App = React.createClass({
       null,
       { webUrl: url, description: desc }
     );
-  },
-  likeHandler: function(index) {
-    var self = this;
-    var id = this.state.pics[index]._id;
-    var liked =
+  }
+  likeHandler(index) {
+    const self = this;
+    const id = this.state.pics[index]._id;
+    const liked =
       this.state.pics[index].likers.indexOf(this.state.user._id) !== -1;
-    var verb = liked ? 'put' : 'post';
+    const verb = liked ? 'put' : 'post';
     this.setState({ picLoading: index });
-    Ajax.ajaxRequest(verb, appUrl + '/api/pics/' + id, function(d) {
-      var pics = self.state.pics;
+    ajax.ajaxRequest(verb, appUrl + '/api/pics/' + id, function (d) {
+      const pics = self.state.pics;
       if (liked) {
-        var i = d.likers.indexOf(self.state.user._id);
+        const i = d.likers.indexOf(self.state.user._id);
         d.likers.splice(i, 1);
         pics[index].likers = d.likers;
       } else {
@@ -127,45 +139,42 @@ var App = React.createClass({
         self.setState({ pics: pics, picLoading: undefined });
       }
     });
-  },
-  deletePic: function(index) {
-    var self = this;
-    var id = this.state.pics[index]._id;
-    Ajax.ajaxRequest('delete', appUrl + '/api/pics/' + id, function() {
-      var pics = self.state.pics;
+  }
+  deletePic(index) {
+    const self = this;
+    const id = this.state.pics[index]._id;
+    ajax.ajaxRequest('delete', appUrl + '/api/pics/' + id, function () {
+      const pics = self.state.pics;
       pics.splice(index, 1);
       self.setState({ pics: pics });
     });
-  },
-  getInitialState: function() {
-    return { user: { twitter: {} }, page: 'all', pics: [] };
-  },
-  imgReplacer: function(e) {
+  }
+  imgReplacer(e) {
     e.target.src = appUrl + '/img/placeholder.png';
-  },
-  idReplacer: function(e) {
+  }
+  idReplacer(e) {
     e.target.src = appUrl + '/img/twitter-egg-icon.png';
-  },
-  setPage: function(page) {
-    var self = this;
+  }
+  setPage(page) {
+    const self = this;
     switch (page) {
       case 'all':
         this.getAllPics();
         break;
       case 'myPics':
-        var id = this.state.user._id;
-        this.getUserPicsbyId(id, function(pics) {
+        const id = this.state.user._id;
+        this.getUserPicsbyId(id, function (pics) {
           self.setState({ pics: pics, page: 'myPics' });
         });
         break;
       default:
         break;
     }
-  },
-  render: function() {
-    var hide = this.state.loading ? '' : ' c-hide';
-    var self = this;
-    var pics = this.state.pics.map(function(p, i) {
+  }
+  render() {
+    const hide = this.state.loading ? '' : ' c-hide';
+    const self = this;
+    const pics = this.state.pics.map(function (p, i) {
       return (
         <Pic
           key={i}
@@ -209,7 +218,7 @@ var App = React.createClass({
               // options
               itemSelector: '.grid-item',
               columnWidth: 200,
-              fitWidth: true
+              fitWidth: true,
             }}
           >
             {pics}
@@ -219,6 +228,6 @@ var App = React.createClass({
       </div>
     );
   }
-});
+}
 
 ReactDOM.render(<App />, document.getElementById('appView'));
