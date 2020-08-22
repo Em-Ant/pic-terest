@@ -17,7 +17,7 @@ require('dotenv').config({ silent: true });
 
 require('./app/config/passport')(passport);
 
-mongoose.connect(process.env.MONGOLAB_URI);
+mongoose.connect(process.env.DB_URI);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(favicon( process.cwd() + '/client/public/favicon.ico'));
